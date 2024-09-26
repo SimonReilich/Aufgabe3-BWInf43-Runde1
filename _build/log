@@ -1,0 +1,22 @@
+# dune build
+# OCAMLPARAM: unset
+# Shared cache: disabled
+# Shared cache location: /home/simon/.cache/dune/db
+# Workspace root: "/home/simon/bwinf43/aufgabe 3"
+# Auto-detected concurrency: 8
+# Dune context:
+#  { name = "default"
+#  ; kind = "default"
+#  ; profile = Dev
+#  ; merlin = true
+#  ; fdo_target_exe = None
+#  ; build_dir = In_build_dir "default"
+#  ; instrument_with = []
+#  }
+$ /home/simon/.opam/5.1.1/bin/ocamlc.opt -config > /tmp/dune_e88ebd_output
+$ (cd _build/default && /home/simon/.opam/5.1.1/bin/ocamldep.opt -modules -impl src/main.ml) > _build/default/src/.assignment.objs/assignment__Main.impl.d
+> File "src/main.ml", line 3, characters 0-3:
+> 3 | end
+>     ^^^
+> Error: Syntax error
+[2]
