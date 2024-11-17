@@ -251,7 +251,7 @@ let _ =
       input
       (Interval.new_interval 0 (int_of_float avg))
       (Interval.new_interval (int_of_float(avg *. 0.5)) (int_of_float (avg *. 1.5)))
-      (Interval.new_interval (int_of_float avg) (int_of_float (avg *. 2.0)))
+      (Interval.new_interval (int_of_float avg) Int.max_int)
       avg
   in
   print_newline ();
