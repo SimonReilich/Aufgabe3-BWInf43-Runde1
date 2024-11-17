@@ -78,14 +78,6 @@ module Interval = struct
     ^ "]"
 end
 
-let rem_nth n l =
-  let rec helper i l acc =
-    match l with
-    | x :: xs -> if i = 0 then acc @ xs else helper (i - 1) xs (acc @ [ x ])
-    | [] -> acc
-  in
-  helper n l []
-
 let extract string =
   let rec helper (acc : string list) (string : string) =
     if String.length string = 0 then acc
@@ -122,6 +114,14 @@ let parse_input file =
   let infile = open_in file in
   let _ = input_line infile in
   read_lines infile []
+
+let rem_nth n l =
+  let rec helper i l acc =
+    match l with
+    | x :: xs -> if i = 0 then acc @ xs else helper (i - 1) xs (acc @ [ x ])
+    | [] -> acc
+  in
+  helper n l []
 
 let get_particapating (length1, length2, length3) list =
   List.fold_left
@@ -235,7 +235,7 @@ let rec algo intervals i_low i_mid i_high avg =
             Interval.get_midpoint i_high )
 
 let _ =
-      print_string "Please provide the path of the .txt-file containing the input: ";
+  print_string "Please provide the path of the .txt-file containing the input: ";
   let input = parse_input (Stdlib.read_line ()) in
   let avg =
     List.fold_left
