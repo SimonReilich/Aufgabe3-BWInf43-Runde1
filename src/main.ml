@@ -278,9 +278,10 @@ let _ =
             (fun i1 i2 ->
               Int.compare (Interval.get_midpoint i1) (Interval.get_midpoint i2))
             input))
-      i_low
+      (Interval.new_interval 0 (int_of_float avg))
       (Interval.new_interval 0 (int_of_float (avg *. 2.0)))
-      i_high avg
+      (Interval.new_interval (int_of_float avg) (int_of_float (avg *. 2.0)))
+      avg
   in
   print_newline ();
   print_string "Short route length: ";
