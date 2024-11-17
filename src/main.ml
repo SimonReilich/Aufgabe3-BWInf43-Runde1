@@ -70,6 +70,11 @@ module Interval = struct
       (get_lower_bound i1 + get_upper_bound i1)
       (get_lower_bound i2 + get_upper_bound i2)
 
+      let compare_sz i1 i2 =
+            Int.compare 
+            (get_upper_bound i1 - get_lower_bound i1)
+            (get_upper_bound i2 - get_lower_bound i2)
+
   let to_string i =
     "["
     ^ string_of_int (get_lower_bound i)
@@ -150,9 +155,7 @@ let rec algo intervals i_low i_mid i_high avg =
         (fun a b ->
           let ca = Interval.cut i_low a in
           let cb = Interval.cut i_low b in
-          Int.compare
-            (Interval.get_upper_bound cb - Interval.get_lower_bound cb)
-            (Interval.get_upper_bound ca - Interval.get_lower_bound ca))
+          Interval.compare_sz cb ca)
         (List.filter
            (fun a ->
              float_of_int (Interval.get_upper_bound a) <= avg
@@ -167,9 +170,7 @@ let rec algo intervals i_low i_mid i_high avg =
         (fun a b ->
           let ca = Interval.cut i_mid a in
           let cb = Interval.cut i_mid b in
-          Int.compare
-            (Interval.get_upper_bound cb - Interval.get_lower_bound cb)
-            (Interval.get_upper_bound ca - Interval.get_lower_bound ca))
+          Interval.compare_sz cb ca)
         (List.filter
            (fun a ->
              float_of_int (Interval.get_upper_bound a) >= avg /. 2.0
@@ -185,9 +186,7 @@ let rec algo intervals i_low i_mid i_high avg =
         (fun a b ->
           let ca = Interval.cut i_high a in
           let cb = Interval.cut i_high b in
-          Int.compare
-            (Interval.get_upper_bound cb - Interval.get_lower_bound cb)
-            (Interval.get_upper_bound ca - Interval.get_lower_bound ca))
+          Interval.compare_sz cb ca)
         (List.filter
            (fun a ->
              float_of_int (Interval.get_lower_bound a) >= avg
