@@ -246,38 +246,9 @@ let _ =
         +. acc)
       0.0 input
   in
-  let i_low =
-    List.nth
-      (List.sort
-         (fun a b ->
-           Int.compare
-             (Interval.get_upper_bound b - Interval.get_lower_bound b)
-             (Interval.get_upper_bound a - Interval.get_lower_bound a))
-         (List.filter
-            (fun a -> float_of_int (Interval.get_upper_bound a) <= avg)
-            input))
-      0
-  in
-  let i_high =
-    List.nth
-      (List.sort
-         (fun a b ->
-           Int.compare
-             (Interval.get_upper_bound b - Interval.get_lower_bound b)
-             (Interval.get_upper_bound a - Interval.get_lower_bound a))
-         (List.filter
-            (fun a -> float_of_int (Interval.get_lower_bound a) >= avg)
-            input))
-      0
-  in
   let l, m, u =
     algo
-      (List.filter
-         (fun a -> a != i_low && a != i_high)
-         (List.sort
-            (fun i1 i2 ->
-              Int.compare (Interval.get_midpoint i1) (Interval.get_midpoint i2))
-            input))
+      input
       (Interval.new_interval 0 (int_of_float avg))
       (Interval.new_interval 0 (int_of_float (avg *. 2.0)))
       (Interval.new_interval (int_of_float avg) (int_of_float (avg *. 2.0)))
