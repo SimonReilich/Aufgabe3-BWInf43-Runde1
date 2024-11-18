@@ -118,13 +118,6 @@ let parse_input (file_name : string) =
   let _ = input_line infile in
   read_lines infile []
 
-let rem_nth (n : int) (ls : 'a list) =
-  let rec helper i acc = function
-    | x :: xs -> if i = 0 then acc @ xs else helper (i - 1) xs (acc @ [ x ])
-    | [] -> acc
-  in
-  helper n ls []
-
 let get_particapating ((l1, l2, l3) : int * int * int)
     (list : Interval.interval list) =
   List.fold_left
@@ -171,8 +164,8 @@ let rec algo (ls : Interval.interval list) (i_low : Interval.interval)
           Interval.compare_sz cb ca)
         (List.filter
            (fun a ->
-             float_of_int (Interval.get_upper_bound a) >= avg /. 2.0
-             && float_of_int (Interval.get_upper_bound a) <= avg *. 2.0
+             float_of_int (Interval.get_upper_bound a) >= avg *. 0.5
+             && float_of_int (Interval.get_upper_bound a) <= avg *. 1.5
              &&
              match Interval.cut a i_mid with
              | EmptyInterval -> false
@@ -206,30 +199,18 @@ let rec algo (ls : Interval.interval list) (i_low : Interval.interval)
               algo
                 (List.filter (fun a -> a != x) ls)
                 i_low i_mid (Interval.cut x i_high) avg
-          | [] ->
-              ( Interval.get_midpoint i_low,
-                Interval.get_midpoint i_mid,
-                Interval.get_midpoint i_high )
       else
         match l2 with
         | x :: _ ->
             algo
               (List.filter (fun a -> a != x) ls)
               i_low (Interval.cut x i_mid) i_high avg
-        | [] ->
-            ( Interval.get_midpoint i_low,
-              Interval.get_midpoint i_mid,
-              Interval.get_midpoint i_high )
     else
       match l1 with
       | x :: _ ->
           algo
             (List.filter (fun a -> a != x) ls)
             (Interval.cut x i_low) i_mid i_high avg
-      | [] ->
-          ( Interval.get_midpoint i_low,
-            Interval.get_midpoint i_mid,
-            Interval.get_midpoint i_high )
 
 let _ =
   print_string "Please provide the path of the .txt-file containing the input: ";
